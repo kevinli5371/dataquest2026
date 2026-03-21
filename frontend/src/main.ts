@@ -16,7 +16,7 @@ const recordingState = {
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="app-shell">
   <header class="titlebar" aria-label="Window title">
-    <span class="titlebar-title">Surgical Vision — Camera</span>
+    <span class="titlebar-title">ORVision</span>
     <div class="titlebar-spacer"></div>
     <div class="titlebar-toolbar-mobile" aria-label="Quick actions">
       <button type="button" class="sidebar-icon-btn theme-toggle" title="Toggle color theme" aria-label="Toggle color theme">
@@ -70,10 +70,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </button>
         </li>
       </ul>
-      <div class="sidebar-footer">
-        <span class="sidebar-footer-main">OR-7 · Mock feed · UI preview only</span>
-        <span class="sidebar-footer-feedback" id="sidebar-feedback" role="status" aria-live="polite"></span>
-      </div>
+      <span class="sidebar-feedback" id="sidebar-feedback" role="status" aria-live="polite"></span>
     </aside>
 
     <div class="resize-handle resize-handle-col" data-resize="sidebar" role="separator" aria-orientation="vertical" aria-label="Resize navigation width"></div>
@@ -93,7 +90,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <button type="button" class="tool-btn primary" id="camera-record-btn" aria-pressed="false">Record</button>
           </div>
         </div>
-        <div class="camera-viewport" role="img" aria-label="Simulated camera feed with detection overlays">
+        <div class="camera-viewport" role="img" aria-label="Camera feed with detection overlays">
           <div class="camera-feed"></div>
           <div class="camera-vignette"></div>
           <div class="camera-overlay">
@@ -110,7 +107,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <span class="badge badge-rec" id="recording-indicator" hidden>REC</span>
             <span class="badge badge-meta" id="camera-viewport-size-label" aria-live="polite">—×— · 30fps</span>
           </div>
-          <p class="camera-hint">Camera preview is simulated — connect device to enable capture</p>
         </div>
       </div>
 
@@ -188,7 +184,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <div class="resize-handle resize-handle-col" data-resize="right" role="separator" aria-orientation="vertical" aria-label="Resize sidebar width"></div>
 
-    <aside class="right-sidebar" aria-label="Timeline and status">
+    <aside class="right-sidebar" aria-label="Timeline">
       <div class="timeline-block">
         <div class="sidebar-header">Timeline</div>
         <ul class="timeline-list timeline-list--sidebar">
@@ -199,9 +195,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <li class="timeline-item timeline-item--event"><time class="timeline-time">14:00:58</time><span class="timeline-text">Suction tip · confidence 0.87</span></li>
           <li class="timeline-item timeline-item--note"><time class="timeline-time">13:58:12</time><span class="timeline-text">Live detection session active</span></li>
         </ul>
-      </div>
-      <div class="status-bar">
-        <span>Ready</span><span class="sep">|</span><span>UI mock</span>
       </div>
     </aside>
   </div>
@@ -434,7 +427,7 @@ function takeSnapshot(): void {
   ctx.fillRect(0, 0, cw, ch)
   ctx.fillStyle = '#feffea'
   ctx.font = '600 16px system-ui, -apple-system, sans-serif'
-  ctx.fillText('Surgical Vision', 16, 32)
+  ctx.fillText('ORVision', 16, 32)
   ctx.font = '12px ui-monospace, monospace'
   ctx.fillStyle = 'rgba(254, 255, 234, 0.9)'
   ctx.fillText(new Date().toISOString(), 16, 54)
@@ -470,7 +463,7 @@ function exportRecordingJson(): void {
   }
 
   const payload = {
-    app: 'Surgical Vision',
+    app: 'ORVision',
     exportKind: 'recording',
     exportedAt: new Date().toISOString(),
     session: { room: 'OR-7', camera: 'Camera 1' },
@@ -498,7 +491,7 @@ function exportRecordingJson(): void {
     recentToolsAtExport: recent,
   }
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
-  downloadBlob(blob, `surgical-vision-recording-${formatFileTimestamp(new Date())}.json`)
+  downloadBlob(blob, `orvision-recording-${formatFileTimestamp(new Date())}.json`)
   showSidebarFeedback('Recording export saved')
 }
 
