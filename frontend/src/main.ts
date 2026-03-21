@@ -3,11 +3,6 @@ import './style.css'
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="app-shell">
   <header class="titlebar" aria-label="Window title">
-    <div class="titlebar-traffic" aria-hidden="true">
-      <span class="dot dot-red"></span>
-      <span class="dot dot-yellow"></span>
-      <span class="dot dot-green"></span>
-    </div>
     <span class="titlebar-title">Surgical Vision — Camera</span>
     <div class="titlebar-spacer"></div>
     <div class="titlebar-search" role="search">
@@ -117,6 +112,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </aside>
 
+    <div class="resize-handle resize-handle-col" data-resize="sidebar" role="separator" aria-orientation="vertical" aria-label="Resize navigation width"></div>
+
     <div class="center-stack">
       <div class="camera-area">
         <div class="camera-toolbar">
@@ -151,6 +148,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <p class="camera-hint">Camera preview is simulated — connect device to enable capture</p>
         </div>
       </div>
+
+      <div class="resize-handle resize-handle-row" data-resize="panel" role="separator" aria-orientation="horizontal" aria-label="Resize recent tools height"></div>
 
       <section class="bottom-panel" aria-label="Recent detections">
         <div class="panel-tabs" role="tablist">
@@ -210,6 +209,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
       </section>
     </div>
+
+    <div class="resize-handle resize-handle-col" data-resize="right" role="separator" aria-orientation="vertical" aria-label="Resize tool library width"></div>
 
     <aside class="right-sidebar" aria-label="Tools and status">
       <div class="right-header">Tool library</div>
@@ -273,3 +274,69 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 </div>
 `
+
+function parseCssPx(value: string): number {
+  const n = parseFloat(value)
+  return Number.isFinite(n) ? n : 0
+}
+
+function clamp(n: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, n))
+}
+
+function setupResizableLayout(): void {
+  const root = document.documentElement
+
+  document.querySelectorAll<HTMLElement>('.resize-handle[data-resize]').forEach((handle) => {
+    handle.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return
+      e.preventDefault()
+
+      const axis = handle.dataset.resize
+      if (!axis || (axis !== 'sidebar' && axis !== 'right' && axis !== 'panel')) return
+
+      const prop =
+        axis === 'sidebar' ? '--sidebar-w' : axis === 'right' ? '--right-w' : '--panel-h'
+
+      const min = axis === 'sidebar' ? 160 : axis === 'right' ? 200 : 120
+      const max = axis === 'sidebar' ? 420 : axis === 'right' ? 480 : 400
+
+      const startX = e.clientX
+      const startY = e.clientY
+      const startVal = parseCssPx(getComputedStyle(root).getPropertyValue(prop))
+
+      handle.classList.add('is-dragging')
+      document.body.style.cursor = axis === 'panel' ? 'ns-resize' : 'col-resize'
+      document.body.style.userSelect = 'none'
+
+      const onMove = (ev: PointerEvent) => {
+        if (axis === 'panel') {
+          const dy = ev.clientY - startY
+          const next = clamp(startVal - dy, min, max)
+          root.style.setProperty(prop, `${next}px`)
+        } else if (axis === 'sidebar') {
+          const dx = ev.clientX - startX
+          const next = clamp(startVal + dx, min, max)
+          root.style.setProperty(prop, `${next}px`)
+        } else {
+          const dx = ev.clientX - startX
+          const next = clamp(startVal - dx, min, max)
+          root.style.setProperty(prop, `${next}px`)
+        }
+      }
+
+      const onUp = () => {
+        document.removeEventListener('pointermove', onMove)
+        document.removeEventListener('pointerup', onUp)
+        handle.classList.remove('is-dragging')
+        document.body.style.cursor = ''
+        document.body.style.userSelect = ''
+      }
+
+      document.addEventListener('pointermove', onMove)
+      document.addEventListener('pointerup', onUp)
+    })
+  })
+}
+
+setupResizableLayout()

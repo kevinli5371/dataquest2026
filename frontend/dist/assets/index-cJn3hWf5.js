@@ -1,11 +1,6 @@
 (function(){let e=document.createElement(`link`).relList;if(e&&e.supports&&e.supports(`modulepreload`))return;for(let e of document.querySelectorAll(`link[rel="modulepreload"]`))n(e);new MutationObserver(e=>{for(let t of e)if(t.type===`childList`)for(let e of t.addedNodes)e.tagName===`LINK`&&e.rel===`modulepreload`&&n(e)}).observe(document,{childList:!0,subtree:!0});function t(e){let t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin===`use-credentials`?t.credentials=`include`:e.crossOrigin===`anonymous`?t.credentials=`omit`:t.credentials=`same-origin`,t}function n(e){if(e.ep)return;e.ep=!0;let n=t(e);fetch(e.href,n)}})(),document.querySelector(`#app`).innerHTML=`
 <div class="app-shell">
   <header class="titlebar" aria-label="Window title">
-    <div class="titlebar-traffic" aria-hidden="true">
-      <span class="dot dot-red"></span>
-      <span class="dot dot-yellow"></span>
-      <span class="dot dot-green"></span>
-    </div>
     <span class="titlebar-title">Surgical Vision — Camera</span>
     <div class="titlebar-spacer"></div>
     <div class="titlebar-search" role="search">
@@ -115,6 +110,8 @@
       </div>
     </aside>
 
+    <div class="resize-handle resize-handle-col" data-resize="sidebar" role="separator" aria-orientation="vertical" aria-label="Resize navigation width"></div>
+
     <div class="center-stack">
       <div class="camera-area">
         <div class="camera-toolbar">
@@ -149,6 +146,8 @@
           <p class="camera-hint">Camera preview is simulated — connect device to enable capture</p>
         </div>
       </div>
+
+      <div class="resize-handle resize-handle-row" data-resize="panel" role="separator" aria-orientation="horizontal" aria-label="Resize recent tools height"></div>
 
       <section class="bottom-panel" aria-label="Recent detections">
         <div class="panel-tabs" role="tablist">
@@ -208,6 +207,8 @@
         </div>
       </section>
     </div>
+
+    <div class="resize-handle resize-handle-col" data-resize="right" role="separator" aria-orientation="vertical" aria-label="Resize tool library width"></div>
 
     <aside class="right-sidebar" aria-label="Tools and status">
       <div class="right-header">Tool library</div>
@@ -270,4 +271,4 @@
     </aside>
   </div>
 </div>
-`;
+`;function e(e){let t=parseFloat(e);return Number.isFinite(t)?t:0}function t(e,t,n){return Math.min(n,Math.max(t,e))}function n(){let n=document.documentElement;document.querySelectorAll(`.resize-handle[data-resize]`).forEach(r=>{r.addEventListener(`pointerdown`,i=>{if(i.button!==0)return;i.preventDefault();let a=r.dataset.resize;if(!a||a!==`sidebar`&&a!==`right`&&a!==`panel`)return;let o=a===`sidebar`?`--sidebar-w`:a===`right`?`--right-w`:`--panel-h`,s=a===`sidebar`?160:a===`right`?200:120,c=a===`sidebar`?420:a===`right`?480:400,l=i.clientX,u=i.clientY,d=e(getComputedStyle(n).getPropertyValue(o));r.classList.add(`is-dragging`),document.body.style.cursor=a===`panel`?`ns-resize`:`col-resize`,document.body.style.userSelect=`none`;let f=e=>{if(a===`panel`){let r=t(d-(e.clientY-u),s,c);n.style.setProperty(o,`${r}px`)}else if(a===`sidebar`){let r=t(d+(e.clientX-l),s,c);n.style.setProperty(o,`${r}px`)}else{let r=t(d-(e.clientX-l),s,c);n.style.setProperty(o,`${r}px`)}},p=()=>{document.removeEventListener(`pointermove`,f),document.removeEventListener(`pointerup`,p),r.classList.remove(`is-dragging`),document.body.style.cursor=``,document.body.style.userSelect=``};document.addEventListener(`pointermove`,f),document.addEventListener(`pointerup`,p)})})}n();
