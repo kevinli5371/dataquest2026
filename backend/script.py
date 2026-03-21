@@ -53,7 +53,7 @@ while True:
         break
 
     # YOLO detection
-    results = model(frame, conf=0.3, verbose=False)[0]
+    results = model(frame, conf=0.25, verbose=True)[0]
 
     # MediaPipe hand detection
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)

@@ -24,5 +24,7 @@ dist-ssr
 *.sw?
 
 venv/
+dataset
+node_modules
 model/
 __pycache__/
