@@ -95,12 +95,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="camera-vignette"></div>
           <div class="camera-overlay">
             <div class="crosshair"></div>
-            <div class="detection-box box-1">
-              <span class="label">Mayo scissors · 0.94</span>
-            </div>
-            <div class="detection-box box-2">
-              <span class="label">Forceps · 0.88</span>
-            </div>
           </div>
           <div class="camera-badges">
             <span class="badge badge-live"><span class="pulse" aria-hidden="true"></span><span>LIVE</span></span>
@@ -130,52 +124,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="panel-body">
           <div class="panel-pane" id="panel-recent" role="tabpanel" aria-labelledby="tab-recent">
           <div class="recent-tools">
-            <div class="recent-chip">
-              <span class="recent-chip-thumb" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 23l14-14M11 9l12 12M7 21l10-10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M8 24l4-4M20 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="25" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="25" cy="7" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
-              </span>
-              <span class="recent-chip-text"><time>14:02:18</time><strong>Mayo scissors</strong></span>
-            </div>
-            <div class="recent-chip">
-              <span class="recent-chip-thumb" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 22c0-4 4-8 8-8s8 4 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 24h12M11 20h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M14 12l2-6M18 12l-2-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              </span>
-              <span class="recent-chip-text"><time>14:02:05</time><strong>Adson forceps</strong></span>
-            </div>
-            <div class="recent-chip">
-              <span class="recent-chip-thumb" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 24c-2 0-3-1-3-3s1-3 3-3 3 1 3 3-1 3-3 3zm12 0c-2 0-3-1-3-3s1-3 3-3 3 1 3 3-1 3-3 3z" stroke="currentColor" stroke-width="1.4"/><path d="M11 21l4-10M21 21l-4-10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 11h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-              </span>
-              <span class="recent-chip-text"><time>14:01:47</time><strong>Needle holder</strong></span>
-            </div>
-            <div class="recent-chip">
-              <span class="recent-chip-thumb" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 20l10-10 2 2-10 10H8v-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 10l6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 22v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <span class="recent-chip-text"><time>14:01:22</time><strong>Scalpel #15</strong></span>
-            </div>
-            <div class="recent-chip">
-              <span class="recent-chip-thumb" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 26V14c0-2 2-4 4-4h6l8-4v16l-8-4h-6c-2 0-4 2-4 4v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="27" r="1.5" fill="currentColor"/></svg>
-              </span>
-              <span class="recent-chip-text"><time>14:00:58</time><strong>Suction tip</strong></span>
-            </div>
           </div>
           </div>
           <div class="panel-pane" id="panel-session" role="tabpanel" aria-labelledby="tab-session" hidden>
             <div class="status-block status-block--panel">
-              <div class="status-row">
-                <span>Confidence</span>
-                <span>avg 0.91</span>
-              </div>
-              <div class="status-row">
-                <span>Latency</span>
-                <span>42 ms</span>
-              </div>
-              <div class="status-row">
-                <span>Tracked tools</span>
-                <span>12</span>
-              </div>
             </div>
           </div>
         </div>
@@ -188,12 +140,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="timeline-block">
         <div class="sidebar-header">Timeline</div>
         <ul class="timeline-list timeline-list--sidebar">
-          <li class="timeline-item timeline-item--event"><time class="timeline-time">14:02:18</time><span class="timeline-text">Mayo scissors · confidence 0.94</span></li>
-          <li class="timeline-item timeline-item--event"><time class="timeline-time">14:02:05</time><span class="timeline-text">Adson forceps · confidence 0.91</span></li>
-          <li class="timeline-item timeline-item--event"><time class="timeline-time">14:01:47</time><span class="timeline-text">Needle holder · confidence 0.89</span></li>
-          <li class="timeline-item timeline-item--note"><time class="timeline-time">14:01:00</time><span class="timeline-text">Recording segment started</span></li>
-          <li class="timeline-item timeline-item--event"><time class="timeline-time">14:00:58</time><span class="timeline-text">Suction tip · confidence 0.87</span></li>
-          <li class="timeline-item timeline-item--note"><time class="timeline-time">13:58:12</time><span class="timeline-text">Live detection session active</span></li>
         </ul>
       </div>
     </aside>
@@ -540,9 +486,265 @@ function setupThemeAndProfile(): void {
   })
 }
 
+// ---------------------------------------------------------------------------
+// WebSocket integration
+// ---------------------------------------------------------------------------
+
+interface Detection {
+  label: string
+  conf: number
+  box: [number, number, number, number]
+  state: 'none' | 'near' | 'on'
+  fingers_on: number
+  fingers_near: number
+}
+
+interface WsMsg {
+  type: string
+  frame_w?: number
+  frame_h?: number
+  detections: Detection[]
+  hand: [number, number] | null
+  fingertips: [number, number][]
+  event?: 'near' | 'on'
+  event_label?: string
+}
+
+function setupWebSocket(): void {
+  const WS_URL = 'ws://localhost:8000/ws'
+
+  const viewport   = document.querySelector<HTMLElement>('.camera-viewport')
+  const feedEl     = document.querySelector<HTMLElement>('.camera-feed')
+  const overlayEl  = document.querySelector<HTMLElement>('.camera-overlay')
+  const recentEl   = document.querySelector<HTMLElement>('.recent-tools')
+  const timelineEl = document.querySelector<HTMLUListElement>('.timeline-list--sidebar')
+  const sizeLabel  = document.getElementById('camera-viewport-size-label')
+
+  if (!viewport || !feedEl || !overlayEl || !recentEl || !timelineEl) return
+
+  // ── Live feed image ──────────────────────────────────────────────────────
+  feedEl.style.background = 'none'
+  const feedImg = document.createElement('img')
+  feedImg.style.cssText =
+    'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;'
+  feedEl.appendChild(feedImg)
+
+  // ── Canvas overlay (replaces div boxes — no flicker on redraw) ────────────
+  const canvas = document.createElement('canvas')
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;'
+  overlayEl.querySelectorAll('.detection-box').forEach((el) => el.remove())
+  overlayEl.appendChild(canvas)
+
+  let seeded = false
+
+  // ── TTS unlock — browsers block speech until a user gesture has occurred ──
+  let audioUnlocked = false
+  document.addEventListener('click', () => {
+    if (!audioUnlocked && 'speechSynthesis' in window) {
+      const silent = new SpeechSynthesisUtterance('')
+      silent.volume = 0
+      window.speechSynthesis.speak(silent)
+      audioUnlocked = true
+    }
+  }, { once: true })
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function nowStr(): string {
+    const d = new Date()
+    return [d.getHours(), d.getMinutes(), d.getSeconds()]
+      .map((n) => String(n).padStart(2, '0'))
+      .join(':')
+  }
+
+  function speak(text: string): void {
+    if (!('speechSynthesis' in window)) return
+    window.speechSynthesis.cancel()
+    const u = new SpeechSynthesisUtterance(text)
+    u.rate = 1.05
+    u.volume = 1.0
+    window.speechSynthesis.speak(u)
+  }
+
+  function addTimelineItem(text: string, kind: 'event' | 'note', icon = ''): void {
+    const li = document.createElement('li')
+    li.className = `timeline-item timeline-item--${kind}`
+    li.innerHTML = `<time class="timeline-time">${nowStr()}</time><span class="timeline-text">${icon}${text}</span>`
+    timelineEl!.prepend(li)
+    while (timelineEl!.children.length > 60) timelineEl!.lastChild?.remove()
+  }
+
+  function addRecentChip(label: string, blob: Blob | null): void {
+    const chip = document.createElement('div')
+    chip.className = 'recent-chip'
+    const thumbInner = blob
+      ? `<img src="${URL.createObjectURL(blob)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;" />`
+      : `<svg viewBox="0 0 32 32" fill="none"><path d="M9 23l14-14M11 9l12 12M7 21l10-10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`
+    chip.innerHTML = `
+      <span class="recent-chip-thumb" aria-hidden="true">${thumbInner}</span>
+      <span class="recent-chip-text">
+        <time>${nowStr()}</time>
+        <strong>${label}</strong>
+      </span>`
+    recentEl!.prepend(chip)
+    while (recentEl!.children.length > 8) recentEl!.lastChild?.remove()
+  }
+
+  // ── Canvas-based detection overlay (atomic redraw = no flicker) ───────────
+  function updateOverlay(detections: Detection[], frameW: number, frameH: number): void {
+    const vpW = overlayEl!.clientWidth
+    const vpH = overlayEl!.clientHeight
+
+    // Resize canvas to match overlay element in device pixels
+    canvas.width  = vpW
+    canvas.height = vpH
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    ctx.clearRect(0, 0, vpW, vpH)
+
+    // Map from camera-frame coords → viewport coords (object-fit:contain math)
+    const scale = Math.min(vpW / frameW, vpH / frameH)
+    const offX  = (vpW - frameW * scale) / 2
+    const offY  = (vpH - frameH * scale) / 2
+
+    for (const det of detections) {
+      const [x1, y1, x2, y2] = det.box
+      const bx = offX + x1 * scale
+      const by = offY + y1 * scale
+      const bw = (x2 - x1) * scale
+      const bh = (y2 - y1) * scale
+
+      const colour =
+        det.state === 'on'   ? '#ff4444' :
+        det.state === 'near' ? '#ffaa00' :
+        'rgba(41,55,200,0.9)'
+
+      // Box border
+      ctx.strokeStyle = colour
+      ctx.lineWidth   = 2
+      ctx.shadowColor = 'rgba(0,0,0,0.4)'
+      ctx.shadowBlur  = 4
+      ctx.strokeRect(bx, by, bw, bh)
+      ctx.shadowBlur  = 0
+
+      // Label text
+      const fingerStr =
+        det.fingers_on > 0 || det.fingers_near > 0
+          ? ` [${det.fingers_on}on/${det.fingers_near}nr]`
+          : ''
+      const stateStr  = det.state !== 'none' ? ` · ${det.state.toUpperCase()}` : ''
+      const text      = `${det.label} ${Math.round(det.conf * 100)}%${fingerStr}${stateStr}`
+
+      ctx.font = '500 12px ui-monospace, monospace'
+      const tw  = ctx.measureText(text).width
+      const lh  = 18
+      const px  = 6
+      const py  = 4
+      const lx  = bx - 1
+      const ly  = by - lh - py * 2
+
+      // Label background
+      ctx.fillStyle = 'rgba(255,255,255,0.92)'
+      ctx.beginPath()
+      ctx.roundRect(lx, ly, tw + px * 2, lh + py, 3)
+      ctx.fill()
+
+      // Label border
+      ctx.strokeStyle = colour
+      ctx.lineWidth   = 1
+      ctx.stroke()
+
+      // Label text
+      ctx.fillStyle = colour
+      ctx.fillText(text, lx + px, ly + lh - 3)
+    }
+  }
+
+  // ── FPS counter ───────────────────────────────────────────────────────────
+  let frameCount = 0
+  let fpsTimer   = Date.now()
+  let lastFrameW = 640
+  let lastFrameH = 480
+
+  // ── Event dedup ───────────────────────────────────────────────────────────
+  const lastFired: Record<string, number> = {}
+
+  // ── Frame blob (thumbnails) ───────────────────────────────────────────────
+  let currentBlob: Blob | null = null
+  let prevUrl: string | null   = null
+
+  // ── Connection ────────────────────────────────────────────────────────────
+  function connect(): void {
+    const ws = new WebSocket(WS_URL)
+    ws.binaryType = 'blob'
+
+    ws.onopen = () => {
+      if (!seeded) {
+        recentEl!.innerHTML = ''
+        timelineEl!.innerHTML = ''
+        seeded = true
+      }
+      addTimelineItem('Live detection session active', 'note')
+    }
+
+    ws.onmessage = (e: MessageEvent) => {
+      if (e.data instanceof Blob) {
+        currentBlob = e.data
+        const url   = URL.createObjectURL(e.data)
+        feedImg.src = url
+        if (prevUrl) URL.revokeObjectURL(prevUrl)
+        prevUrl = url
+
+        frameCount++
+        const now = Date.now()
+        if (now - fpsTimer >= 1000) {
+          const fps = Math.round((frameCount * 1000) / (now - fpsTimer))
+          if (sizeLabel) {
+            sizeLabel.textContent = `${lastFrameW}×${lastFrameH} · ${fps}fps`
+          }
+          frameCount = 0
+          fpsTimer   = now
+        }
+      } else {
+        const msg: WsMsg = JSON.parse(e.data as string)
+        // Use server-provided frame dimensions (eliminates race with img load)
+        if (msg.frame_w) lastFrameW = msg.frame_w
+        if (msg.frame_h) lastFrameH = msg.frame_h
+        updateOverlay(msg.detections, lastFrameW, lastFrameH)
+
+        if (msg.event && msg.event_label) {
+          const key = `${msg.event}:${msg.event_label}`
+          const now = Date.now()
+          if (!lastFired[key] || now - lastFired[key] > 1500) {
+            lastFired[key] = now
+            if (msg.event === 'on') {
+              addRecentChip(msg.event_label, currentBlob)
+              addTimelineItem(msg.event_label, 'event', '🔴 ')
+              speak(msg.event_label)
+            } else {
+              addTimelineItem(msg.event_label, 'event', '🟡 ')
+              speak(`Near ${msg.event_label}`)
+            }
+          }
+        }
+      }
+    }
+
+    ws.onclose = () => {
+      addTimelineItem('Connection lost — reconnecting…', 'note')
+      setTimeout(connect, 2000)
+    }
+
+    ws.onerror = () => ws.close()
+  }
+
+  connect()
+}
+
 setupResizableLayout()
 setupBottomPanelTabs()
 setupCameraViewportSizeLabel()
 setupRecordingControls()
 setupSnapshotAndExport()
 setupThemeAndProfile()
+setupWebSocket()
