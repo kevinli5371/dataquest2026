@@ -4,6 +4,7 @@ import math
 import os
 import time
 import urllib.request
+from collections import deque
 from contextlib import asynccontextmanager
 
 import cv2
@@ -23,7 +24,10 @@ HAND_MODEL_URL = (
     "hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"
 )
 CONF_THRESHOLD  = 0.8
-DISABLED_LABELS = {"DeBakey Dissector"}
+DISABLED_LABELS = {"DeBakey Dissector", 
+"Curved Mayo Scissors"}
+LABEL_HISTORY   = 6   # frames to smooth over
+LABEL_MIN_VOTES = 4   # label must appear this many times to be accepted
 NEAR_THRESHOLD = 80    # px from box edge → "hand near"
 ON_THRESHOLD   = 10    # px from box edge (or inside) → "hand on"
 NEAR_COOLDOWN  = 1.5   # seconds between "near" events
@@ -61,6 +65,54 @@ def init_hand_tracker() -> mp.tasks.vision.HandLandmarker:
         num_hands=1,
     )
     return mp.tasks.vision.HandLandmarker.create_from_options(options)
+
+
+class LabelSmoother:
+    """Majority-vote label stabiliser — kills flicker when the model oscillates."""
+
+    def __init__(self, history: int = LABEL_HISTORY, min_votes: int = LABEL_MIN_VOTES):
+        self.history   = history
+        self.min_votes = min_votes
+        self._tracks: list[dict] = []
+
+    @staticmethod
+    def _iou(a: tuple, b: tuple) -> float:
+        ax1, ay1, ax2, ay2 = a
+        bx1, by1, bx2, by2 = b
+        ix1, iy1 = max(ax1, bx1), max(ay1, by1)
+        ix2, iy2 = min(ax2, bx2), min(ay2, by2)
+        inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
+        if inter == 0:
+            return 0.0
+        union = (ax2 - ax1) * (ay2 - ay1) + (bx2 - bx1) * (by2 - by1) - inter
+        return inter / union if union > 0 else 0.0
+
+    def smooth(self, box: tuple, raw_label: str) -> str:
+        best_idx, best_iou = -1, 0.3
+        for i, t in enumerate(self._tracks):
+            iou = self._iou(box, t["box"])
+            if iou > best_iou:
+                best_iou, best_idx = iou, i
+
+        if best_idx == -1:
+            self._tracks.append({"box": box, "labels": deque([raw_label], maxlen=self.history)})
+            return raw_label
+
+        track = self._tracks[best_idx]
+        track["box"] = box
+        track["labels"].append(raw_label)
+
+        counts: dict[str, int] = {}
+        for lbl in track["labels"]:
+            counts[lbl] = counts.get(lbl, 0) + 1
+        majority, votes = max(counts.items(), key=lambda x: x[1])
+        return majority if votes >= self.min_votes else raw_label
+
+    def expire(self, active_boxes: list[tuple]) -> None:
+        self._tracks = [
+            t for t in self._tracks
+            if any(self._iou(t["box"], b) > 0.3 for b in active_boxes)
+        ]
 
 
 def preprocess_for_detection(frame: np.ndarray) -> np.ndarray:
@@ -225,6 +277,7 @@ async def websocket_endpoint(websocket: WebSocket):
     last_near_time = 0.0
     last_on_time   = 0.0
     frame_interval = 1.0 / TARGET_FPS
+    smoother       = LabelSmoother()
 
     try:
         while True:
@@ -272,6 +325,8 @@ async def websocket_endpoint(websocket: WebSocket):
                 label = yolo_model.names[cls]
                 if label in DISABLED_LABELS:
                     continue
+                bcoords = (x1, y1, x2, y2)
+                label   = smoother.smooth(bcoords, label)
                 bcoords = (x1, y1, x2, y2)
 
                 fingers_on   = 0
@@ -322,6 +377,9 @@ async def websocket_endpoint(websocket: WebSocket):
                     "fingers_on":   fingers_on,
                     "fingers_near": fingers_near,
                 })
+
+            # ---- Expire stale label tracks ----------------------------------
+            smoother.expire([tuple(d["box"]) for d in detections])
 
             # ---- Send annotated frame as binary JPEG --------------------
             encode_params = [cv2.IMWRITE_JPEG_QUALITY, JPEG_QUALITY]
